@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Dino</title>
+
+<!--Mobile specific meta goodness :)-->
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<!--css-->
+<link rel="stylesheet" href="styles.css">
+
+<!-- Favicons-->
+<link rel="shortcut icon" href="images/favicon.ico">
+<style type="text/css">
+  #icons
+  {
+  text-align: center;
+  }
+  #tiredStat, #hungerStat, #happinessStat
+  {
+  text-align: center;
+  }
+</style>
+<script type="text/javascript">
+
+  var fps = 2;
+
+  function run() {
+    document.getElementById('tiredStat').innerHTML=tired;
+    document.getElementById('hungerStat').innerHTML=hunger;
+    document.getElementById('happinessStat').innerHTML=happiness;
+  }
+
+  // Start the game loop
+  var intervalId = setInterval(run, 1000 / fps);
+
+  var tired = 50, hunger = 0, happiness = 50;
+
+  var block = false;
+  function feed(){
+    if(!block){
+      document.mainImage.src='images/lildude/eating.gif';
+      block = true;
+      setTimeout(function(){
+        document.mainImage.src='images/lildude/looking.gif';
+        block = false;
+      }, 2000);
+      hunger+=10;
+      if(hunger>100){
+        hunger=100;
+      }
+      document.getElementById('hungerStat').innerHTML=hunger;
+    }
+  }
+
+  function sleep(){
+    if(!block && tired <80){
+      document.mainImage.src='images/lildude/depressed.gif';
+      block = true;
+      setTimeout(function(){
+        tired=100;
+        document.mainImage.src='images/lildude/looking.gif';
+        block = false;
+      }, (100-tired) * 1000);
+      document.getElementById('tiredStat').innerHTML=tired;
+    }
+  }
+
+  function play(){
+    if(!block){
+      document.mainImage.src='images/lildude/dance.gif';
+      block = true;
+      setTimeout(function(){
+        document.mainImage.src='images/lildude/looking.gif';
+        block = false;
+      }, 2000);
+      happiness+=15;
+      document.getElementById('happinessStat').innerHTML=happiness;
+    }
+  }
+
+  function defaultImage(){
+    document.mainImage.src='images/lildude/looking.gif';
+  }
+
+  runLoop();
+  
+
+
+  function runLoop(){
+      tired--;
+      hunger-2;
+      happiness--;
+
+      if(hunger < 0){
+        hunger=0;
+      }
+      if(tired < 0){
+        tired=0;
+      }
+      
+      setTimeout(function(){
+        runLoop();
+      }, 60000*10);
+  }
+</script>
+</head>
+<body id="home">
+ 
+    <div class="wrapper">
+     
+        <header>
+          <h1 class="logo"><a href="">Dino</a></h1>
+        </header>
+         
+        <article>
+         
+         <!-- Dino goes here -->
+          <table>
+            <tr>
+              <td colspan="3" align="center"><img src="images/lildude/looking.gif" align="middle" name="mainImage" width="150"></td>
+            </tr>
+            <tr>
+              <td id="icons"><img src="images/lildude/sleep.png" height="40" width="40" onclick="sleep()"></td>
+              <td id="icons"><img src="images/lildude/food.png" height="40" width="40" onclick="feed()"></td>
+              <td id="icons"><img src="images/lildude/fun.png" height="40" width="40" onclick="play()"></td>
+            </tr>
+            <tr>
+              <td id="tiredStat"></td>
+              <td id="hungerStat"></td>
+              <td id="happinessStat"></td>
+            </tr>
+          </table>
+
+        </article>
+     
+    </nav><!--end primary_nav-->
+         
+        <footer>
+         
+            <p>Copyright &copy;2014  <a href="http://lab-foopod.rhcloud.com">Foopod</a></p>
+         
+        </footer>
+     
+    </div><!--end wrapper-->
+     
+  
+
+
+
+</body>
+</html>
